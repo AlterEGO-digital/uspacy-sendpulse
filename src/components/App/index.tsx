@@ -12,7 +12,7 @@ const App: React.FC<IProps> = () => {
 				color: (theme) => theme.palette.primary.main,
 			}}
 		>
-			App
+			Main
 		</Box>
 	);
 };
