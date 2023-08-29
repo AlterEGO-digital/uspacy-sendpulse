@@ -1,21 +1,36 @@
 name: Build and Deploy
 on:
   push:
-    branches: [main]
+    branches: [ main ]
 permissions:
   contents: write
 jobs:
   build-and-deploy:
-    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
-      - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+      - uses: actions/checkout@main
+        name: Checkout protobuf
+        with:
+          repository: Uspacy/protobuf
+          ref: 'v0.6'
+          path: './src/services/grpc'
+          token: ${{ secrets.DOCKER_TOKEN }}
+      - name: Build Protobuf
+        run: |
+          cd ./src/services/grpc
+          make build-web
+      - name: Use Node.js
+        uses: actions/setup-node@main
+        with:
+          node-version: 17.x
+      - name: Install and Build 🔧
         run: |
           npm install
-          npm run build
+          npm run build:docs
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist # The folder the action should deploy.
+          folder: docs
