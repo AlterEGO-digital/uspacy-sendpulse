@@ -133,7 +133,9 @@ const Auth: React.FC = () => {
 						<Typography variant="h5" sx={{ fontWeight: 600, mb: 1.5 }}>
 							Sendpulse
 						</Typography>
-						<Typography variant="body2">Please sign-in to your account and start the adventure</Typography>
+						<Typography variant="body2">
+							Скопіюйте, будь ласка, client id та client secret в особистому кабінеті Sendpulse та авторизуйтесь в системі
+						</Typography>
 					</Box>
 					<form noValidate autoComplete="off" onSubmit={(e) => e.preventDefault()}>
 						<StringInput
