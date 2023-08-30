@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+import { SENDPULSE_API } from '../../../const';
 import { getToken } from '../../../helpers/db';
 
 export const getAddressBooks = createAsyncThunk('addressBook/getAddressBooks', async (_, thunkAPI) => {
 	try {
 		const token = await getToken();
-		return await fetch('https://test-sendpulse.alterego.biz.ua/sendpulse/v1/addressbooks/getAddressbooks', {
+		return await fetch(`${SENDPULSE_API}/addressbooks/getAddressbooks`, {
 			headers: { Accept: 'application/json', 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
 		}).then(async (res) => {
 			return await res.json();
@@ -18,7 +19,7 @@ export const getAddressBooks = createAsyncThunk('addressBook/getAddressBooks', a
 export const getAddressBookEntities = createAsyncThunk('addressBook/getAddressBookEntities', async (_, thunkAPI) => {
 	try {
 		const token = await getToken();
-		return await fetch('https://test-sendpulse.alterego.biz.ua/sendpulse/v1/addressbooks/getAddressbookEntities', {
+		return await fetch(`${SENDPULSE_API}/addressbooks/getAddressbookEntities`, {
 			headers: { Accept: 'application/json', 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
 		}).then(async (res) => {
 			return await res.json();
@@ -33,7 +34,7 @@ export const addAddressBookForEntity = createAsyncThunk(
 	async (data: { leads?: number; contacts?: number; companies?: number }, thunkAPI) => {
 		try {
 			const token = await getToken();
-			return await fetch('https://test-sendpulse.alterego.biz.ua/sendpulse/v1/addressbooks/addAddressbookForEntity', {
+			return await fetch(`${SENDPULSE_API}/addressbooks/addAddressbookForEntity`, {
 				method: 'POST',
 				body: JSON.stringify({ entities: data }),
 				headers: { Accept: 'application/json', 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
