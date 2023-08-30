@@ -62,8 +62,8 @@ const EntitySelect: React.FC<IProps> = ({ entityName, addressBookId, onChangeAdd
 	return (
 		<Box
 			sx={{
-				background: theme.palette.grey[600],
-				color: theme.palette.background.paper,
+				background: theme.palette.background.paper,
+				color: theme.palette.text.primary,
 				padding: '7px 15px',
 				borderRadius: '6px',
 				display: 'flex',
@@ -75,6 +75,8 @@ const EntitySelect: React.FC<IProps> = ({ entityName, addressBookId, onChangeAdd
 			<Typography
 				sx={{
 					width: '100px',
+					fontSize: '16px',
+					color: theme.palette.text.primary,
 				}}
 			>
 				{getTitle(entityName)}
@@ -86,7 +88,7 @@ const EntitySelect: React.FC<IProps> = ({ entityName, addressBookId, onChangeAdd
 					<Typography
 						sx={{
 							fontSize: '16px',
-							color: openUnit ? theme.palette.primary.main : theme.palette.text.disabled,
+							color: openUnit ? theme.palette.primary.main : theme.palette.text.primary,
 							letterSpacing: '0.15px',
 							cursor: 'pointer',
 							'&:hover': {
