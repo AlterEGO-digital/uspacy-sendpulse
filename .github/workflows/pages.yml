@@ -1,36 +1,21 @@
 name: Build and Deploy
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 permissions:
   contents: write
 jobs:
   build-and-deploy:
-    runs-on: self-hosted
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
-      - uses: actions/checkout@main
-        name: Checkout protobuf
-        with:
-          repository: Uspacy/protobuf
-          ref: 'v0.6'
-          path: './src/services/grpc'
-          token: ${{ secrets.DOCKER_TOKEN }}
-      - name: Build Protobuf
-        run: |
-          cd ./src/services/grpc
-          make build-web
-      - name: Use Node.js
-        uses: actions/setup-node@main
-        with:
-          node-version: 17.x
       - name: Install and Build 🔧
         run: |
           npm install
-          npm run build:docs
-
+          npm run build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: docs
+          folder: dist
