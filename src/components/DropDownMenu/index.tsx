@@ -5,7 +5,7 @@ import React from 'react';
 
 import { IProps } from './types';
 
-const DropDownMenu: React.FC<IProps> = ({ anchorEl, open, handleClose, handleChange, options }) => {
+const DropDownMenu: React.FC<IProps> = ({ id, anchorEl, open, handleClose, handleChange, options }) => {
 	const onClick = (event, item) => {
 		handleChange(item.id);
 		handleClose(event);
@@ -34,6 +34,7 @@ const DropDownMenu: React.FC<IProps> = ({ anchorEl, open, handleClose, handleCha
 						display: 'flex',
 						alignItems: 'center',
 						gap: 2,
+						...(id === item.id && { color: (theme) => theme.palette.primary.main }),
 					}}
 				>
 					<Typography>{item.name}</Typography>

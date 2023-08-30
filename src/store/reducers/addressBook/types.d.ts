@@ -6,5 +6,6 @@ export interface IState {
 	addressBooksForEntity: IAddressbookForEntity;
 	loadingAddressBooks: boolean;
 	loadingAddressBooksForEntity: boolean;
+	loadingUpdateAddressBooksForEntity: boolean;
 	errorMessage: string;
 }

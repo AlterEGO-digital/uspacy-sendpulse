@@ -1,4 +1,5 @@
 export interface IProps {
+	id: number;
 	anchorEl: null | HTMLElement;
 	open: boolean;
 	handleClose(event): void;

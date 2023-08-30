@@ -5,6 +5,7 @@ import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'r
 
 import { useAddressBookData } from '../../hooks/useAddressBook';
 import DropDownMenu from '../DropDownMenu';
+import Loader from '../Loader';
 
 interface IProps {
 	entityName: 'leads' | 'contacts' | 'companies';
@@ -14,12 +15,13 @@ interface IProps {
 const EntitySelect: React.FC<IProps> = ({ entityName, addressBookId, onChangeAddressBookId }) => {
 	const theme = useTheme();
 	const [anchorUnit, setAnchorUnit] = useState<null | HTMLElement>(null);
-	const { addressBooks } = useAddressBookData();
+	const { addressBooks, loadingAddressBooks, loadingAddressBooksForEntity } = useAddressBookData();
 	const [currentAddressBookId, setCurrentAddressId] = useState(addressBookId);
 	const address = useMemo(
 		() => [{ id: 0, name: 'Не обрано' }, ...addressBooks]?.find((it) => it?.id === currentAddressBookId),
 		[addressBooks, currentAddressBookId],
 	);
+	const loading = useMemo(() => loadingAddressBooks || loadingAddressBooksForEntity, [loadingAddressBooks, loadingAddressBooksForEntity]);
 	const openUnit = Boolean(anchorUnit);
 
 	useEffect(() => {
@@ -77,27 +79,36 @@ const EntitySelect: React.FC<IProps> = ({ entityName, addressBookId, onChangeAdd
 			>
 				{getTitle(entityName)}
 			</Typography>
-			<Typography
-				sx={{
-					fontSize: '16px',
-					color: openUnit ? theme.palette.primary.main : theme.palette.text.disabled,
-					letterSpacing: '0.15px',
-					'&:hover': {
-						color: theme.palette.primary.main,
-					},
-				}}
-				onClick={(e) => handleAnchorClick(e, setAnchorUnit)}
-			>
-				{address?.name}
-			</Typography>
-			<DropDownMenu
-				options={Array.from(new Set([{ id: 0, name: 'Не обрано' }, ...addressBooks?.map((it) => ({ id: it.id, name: it.name }))]))}
-				anchorEl={anchorUnit}
-				handleClose={(e) => handleDropDownClose(e, setAnchorUnit)}
-				handleChange={handleUnitChange}
-				open={openUnit}
-			/>
+			{loading ? (
+				<Loader size={25} />
+			) : (
+				<>
+					<Typography
+						sx={{
+							fontSize: '16px',
+							color: openUnit ? theme.palette.primary.main : theme.palette.text.disabled,
+							letterSpacing: '0.15px',
+							cursor: 'pointer',
+							'&:hover': {
+								color: theme.palette.primary.main,
+							},
+						}}
+						onClick={(e) => handleAnchorClick(e, setAnchorUnit)}
+					>
+						{address?.name}
+					</Typography>
+					<DropDownMenu
+						id={currentAddressBookId}
+						options={Array.from(new Set([{ id: 0, name: 'Не обрано' }, ...addressBooks?.map((it) => ({ id: it.id, name: it.name }))]))}
+						anchorEl={anchorUnit}
+						handleClose={(e) => handleDropDownClose(e, setAnchorUnit)}
+						handleChange={handleUnitChange}
+						open={openUnit}
+					/>
+				</>
+			)}
 			<Button
+				disabled={loading || !currentAddressBookId}
 				sx={{
 					textTransform: 'initial',
 					fontSize: '14px',
