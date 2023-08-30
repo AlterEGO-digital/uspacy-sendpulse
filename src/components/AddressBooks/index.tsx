@@ -8,12 +8,11 @@ import EntitySelect from '../EntitySelect';
 
 const AddressBooks = () => {
 	const { addressBooksForEntity, addressBooks } = useAddressBookData();
-	const { getAddressBooks, getAddressBookEntities, addAddressBookForEntity } = useAddressBook();
+	const { getAddressBooks, getAddressBookEntities, addAddressBookForEntity, clearAddressBooksInfo } = useAddressBook();
 	const { addToken } = useAuth();
 	const ENTITIES = ['leads', 'contacts', 'companies'];
 	const [currentAddressBooksForEntity, setCurrentAddressBooksForEntity] = useState(addressBooksForEntity?.entities);
 	const [isDiff, setIsDiff] = useState(false);
-
 	useEffect(() => {
 		setCurrentAddressBooksForEntity(addressBooksForEntity?.entities);
 	}, [addressBooksForEntity?.entities]);
@@ -50,7 +49,7 @@ const AddressBooks = () => {
 	};
 
 	const logout = () => {
-		addToken('0', '0');
+		addToken('0', '0').then(clearAddressBooksInfo);
 	};
 
 	return (
@@ -59,6 +58,7 @@ const AddressBooks = () => {
 				display: 'flex',
 				flexDirection: 'column',
 				gap: '15px',
+				padding: '10px 30px',
 			}}
 		>
 			{ENTITIES?.map((it) => (

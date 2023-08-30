@@ -13,6 +13,7 @@ const initialState = {
 	errorMessage: '',
 	loadingAddressBooks: true,
 	loadingAddressBooksForEntity: true,
+	loadingUpdateAddressBooksForEntity: false,
 } as IState;
 
 const addressBookReducer = createSlice({
@@ -52,16 +53,16 @@ const addressBookReducer = createSlice({
 			state.errorMessage = action.payload;
 		},
 		[addAddressBookForEntity.fulfilled.type]: (state, action: PayloadAction<IAddressbookForEntity>) => {
-			state.loadingAddressBooksForEntity = false;
+			state.loadingUpdateAddressBooksForEntity = false;
 			state.errorMessage = '';
 			state.addressBooksForEntity = action.payload;
 		},
 		[addAddressBookForEntity.pending.type]: (state) => {
-			state.loadingAddressBooksForEntity = true;
+			state.loadingUpdateAddressBooksForEntity = true;
 			state.errorMessage = '';
 		},
 		[addAddressBookForEntity.rejected.type]: (state, action: PayloadAction<string>) => {
-			state.loadingAddressBooksForEntity = false;
+			state.loadingUpdateAddressBooksForEntity = false;
 			state.errorMessage = action.payload;
 		},
 	},
