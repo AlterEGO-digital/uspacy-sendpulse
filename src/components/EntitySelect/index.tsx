@@ -62,7 +62,7 @@ const EntitySelect: React.FC<IProps> = ({ entityName, addressBookId, onChangeAdd
 	return (
 		<Box
 			sx={{
-				background: theme.palette.secondary.main,
+				background: theme.palette.grey[600],
 				color: theme.palette.background.paper,
 				padding: '7px 15px',
 				borderRadius: '6px',

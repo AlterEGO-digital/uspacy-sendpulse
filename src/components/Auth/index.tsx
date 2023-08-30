@@ -125,7 +125,6 @@ const Auth: React.FC = () => {
 				alignItems: 'center',
 				justifyContent: 'center',
 				padding: theme.spacing(5),
-				minHeight: `calc(100vh - ${theme.spacing((theme.mixins.toolbar.minHeight as number) / 4)})`,
 			}}
 		>
 			<Card sx={{ zIndex: 1 }}>
