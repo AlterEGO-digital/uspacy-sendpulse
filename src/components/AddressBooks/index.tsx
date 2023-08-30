@@ -18,15 +18,15 @@ const AddressBooks = () => {
 	}, [addressBooksForEntity?.entities]);
 
 	useEffect(() => {
-		!addressBooks.length && getAddressBooks();
-		!Object.keys(addressBooksForEntity?.entities).length && getAddressBookEntities();
+		!addressBooks?.length && getAddressBooks();
+		!Object.keys(addressBooksForEntity?.entities)?.length && getAddressBookEntities();
 	}, []);
 
 	useEffect(() => {
 		setIsDiff(
-			addressBooksForEntity?.entities.leads !== currentAddressBooksForEntity.leads ||
-				addressBooksForEntity?.entities.contacts !== currentAddressBooksForEntity.contacts ||
-				addressBooksForEntity?.entities.companies !== currentAddressBooksForEntity.companies,
+			addressBooksForEntity?.entities.leads !== currentAddressBooksForEntity?.leads ||
+				addressBooksForEntity?.entities.contacts !== currentAddressBooksForEntity?.contacts ||
+				addressBooksForEntity?.entities.companies !== currentAddressBooksForEntity?.companies,
 		);
 	}, [addressBooksForEntity?.entities, currentAddressBooksForEntity]);
 
