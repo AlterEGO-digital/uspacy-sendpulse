@@ -21,11 +21,6 @@ const AddressBooks = () => {
 	const [isDealEnable, setIsDealEnable] = useState(['enabled', 'success'].includes(dealsStatus?.message));
 
 	useEffect(() => {
-		if (isStage) {
-			getDealsStatus();
-		}
-	}, []);
-	useEffect(() => {
 		setIsDealEnable(['enabled', 'success'].includes(dealsStatus?.message));
 	}, [dealsStatus?.message]);
 	useEffect(() => {
@@ -35,6 +30,7 @@ const AddressBooks = () => {
 	useEffect(() => {
 		!addressBooks?.length && getAddressBooks();
 		!Object.keys(addressBooksForEntity?.entities)?.length && getAddressBookEntities();
+		getDealsStatus();
 	}, []);
 
 	useEffect(() => {
@@ -95,27 +91,42 @@ const AddressBooks = () => {
 					flexDirection: 'row',
 				}}
 			>
-				{isStage && (
-					<FormControlLabel
-						sx={{
-							fontSize: '14px',
-							marginLeft: '5px',
-						}}
-						control={<Checkbox checked={isDealEnable} onChange={changeDealStatus} />}
-						label={
-							<Typography
-								component="span"
-								sx={{
-									color: (theme) => theme.palette.text.primary,
-									fontSize: '14px',
-								}}
-							>
-								створювати Угоду після створення Контакту в Адресній книзі Sendpulse
-							</Typography>
-						}
-					/>
-				)}
-				{!isStage && isDiff && (
+				<FormControlLabel
+					sx={{
+						fontSize: '14px',
+						marginLeft: '5px',
+					}}
+					control={<Checkbox checked={isDealEnable} onChange={changeDealStatus} />}
+					label={
+						<Typography
+							component="span"
+							sx={{
+								color: (theme) => theme.palette.text.primary,
+								fontSize: '14px',
+							}}
+						>
+							створювати Угоду після створення Контакту в Адресній книзі Sendpulse
+						</Typography>
+					}
+				/>
+				<Button
+					sx={{
+						marginLeft: 'auto',
+						textTransform: 'initial',
+						marginRight: '15px',
+					}}
+					onClick={logout}
+				>
+					Вийти
+				</Button>
+			</Box>
+			<Box
+				sx={{
+					display: 'flex',
+					flexDirection: 'row',
+				}}
+			>
+				{isDiff && (
 					<>
 						<Button
 							sx={{
@@ -136,47 +147,7 @@ const AddressBooks = () => {
 						</Button>
 					</>
 				)}
-				<Button
-					sx={{
-						marginLeft: 'auto',
-						textTransform: 'initial',
-						marginRight: '15px',
-					}}
-					onClick={logout}
-				>
-					Вийти
-				</Button>
 			</Box>
-			{isStage && (
-				<Box
-					sx={{
-						display: 'flex',
-						flexDirection: 'row',
-					}}
-				>
-					{isDiff && (
-						<>
-							<Button
-								sx={{
-									textTransform: 'initial',
-									marginLeft: '5px',
-								}}
-								onClick={saveChange}
-							>
-								Зберегти
-							</Button>
-							<Button
-								sx={{
-									textTransform: 'initial',
-								}}
-								onClick={cancelChange}
-							>
-								Скасувати
-							</Button>
-						</>
-					)}
-				</Box>
-			)}
 		</Box>
 	);
 };
