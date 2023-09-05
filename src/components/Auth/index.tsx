@@ -181,10 +181,9 @@ const Auth: React.FC = () => {
 					{!loadingAddToken && !authInfo.has_token && isIncorrectData && (
 						<Typography
 							sx={{
+								marginTop: '10px',
 								fontSize: '12px',
 								color: theme.palette.error.main,
-								position: 'absolute',
-								bottom: '11px',
 							}}
 						>
 							Ви ввели неправильні авторизаційні дані! <br />
