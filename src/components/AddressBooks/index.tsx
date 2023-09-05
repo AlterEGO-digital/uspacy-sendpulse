@@ -1,18 +1,33 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 
+import { isStage } from '../../const';
 import { useAddressBook, useAddressBookData } from '../../hooks/useAddressBook';
 import { useAuth } from '../../hooks/useAuth';
 import EntitySelect from '../EntitySelect';
 
 const AddressBooks = () => {
-	const { addressBooksForEntity, addressBooks } = useAddressBookData();
-	const { getAddressBooks, getAddressBookEntities, addAddressBookForEntity, clearAddressBooksInfo } = useAddressBook();
+	const { addressBooksForEntity, addressBooks, dealsStatus } = useAddressBookData();
+	const { getAddressBooks, getAddressBookEntities, addAddressBookForEntity, clearAddressBooksInfo, getDealsStatus, handleDealsStatus } =
+		useAddressBook();
 	const { addToken } = useAuth();
 	const ENTITIES = ['leads', 'contacts', 'companies'];
 	const [currentAddressBooksForEntity, setCurrentAddressBooksForEntity] = useState(addressBooksForEntity?.entities);
 	const [isDiff, setIsDiff] = useState(false);
+	const [isDealEnable, setIsDealEnable] = useState(['enabled', 'success'].includes(dealsStatus?.message));
+
+	useEffect(() => {
+		if (isStage) {
+			getDealsStatus();
+		}
+	}, []);
+	useEffect(() => {
+		setIsDealEnable(['enabled', 'success'].includes(dealsStatus?.message));
+	}, [dealsStatus?.message]);
 	useEffect(() => {
 		setCurrentAddressBooksForEntity(addressBooksForEntity?.entities);
 	}, [addressBooksForEntity?.entities]);
@@ -30,6 +45,10 @@ const AddressBooks = () => {
 		);
 	}, [addressBooksForEntity?.entities, currentAddressBooksForEntity]);
 
+	const changeDealStatus = (event) => {
+		handleDealsStatus(event.target.checked);
+		setIsDealEnable(event.target.checked);
+	};
 	const changeCurrentAddressBooksForEntity = (field: 'leads' | 'contacts' | 'companies') => (id: number) => {
 		setCurrentAddressBooksForEntity((prev) => ({ ...prev, [field]: id }));
 	};
@@ -76,7 +95,27 @@ const AddressBooks = () => {
 					flexDirection: 'row',
 				}}
 			>
-				{isDiff && (
+				{isStage && (
+					<FormControlLabel
+						sx={{
+							fontSize: '14px',
+							marginLeft: '5px',
+						}}
+						control={<Checkbox checked={isDealEnable} onChange={changeDealStatus} />}
+						label={
+							<Typography
+								component="span"
+								sx={{
+									color: (theme) => theme.palette.text.primary,
+									fontSize: '14px',
+								}}
+							>
+								створювати Угоду після створення Контакту в Адресній книзі Sendpulse
+							</Typography>
+						}
+					/>
+				)}
+				{!isStage && isDiff && (
 					<>
 						<Button
 							sx={{
@@ -108,6 +147,36 @@ const AddressBooks = () => {
 					Вийти
 				</Button>
 			</Box>
+			{isStage && (
+				<Box
+					sx={{
+						display: 'flex',
+						flexDirection: 'row',
+					}}
+				>
+					{isDiff && (
+						<>
+							<Button
+								sx={{
+									textTransform: 'initial',
+									marginLeft: '5px',
+								}}
+								onClick={saveChange}
+							>
+								Зберегти
+							</Button>
+							<Button
+								sx={{
+									textTransform: 'initial',
+								}}
+								onClick={cancelChange}
+							>
+								Скасувати
+							</Button>
+						</>
+					)}
+				</Box>
+			)}
 		</Box>
 	);
 };
