@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IAddressBook } from '../../../models/IAddressBook';
 import { IAddressbookForEntity } from '../../../models/IAddressbookForEntity';
-import { addAddressBookForEntity, getAddressBookEntities, getAddressBooks } from './action';
+import { IDealsStatus } from '../../../models/IDealsStatus';
+import { addAddressBookForEntity, getAddressBookEntities, getAddressBooks, getDealsStatus, handleDealsStatus } from './action';
 import { IState } from './types';
 
 const initialState = {
@@ -10,10 +11,15 @@ const initialState = {
 	addressBooksForEntity: {
 		entities: {},
 	},
+	dealsStatus: {
+		status: false,
+		message: '',
+	},
 	errorMessage: '',
 	loadingAddressBooks: true,
 	loadingAddressBooksForEntity: true,
 	loadingUpdateAddressBooksForEntity: false,
+	loadingDealStatus: true,
 } as IState;
 
 const addressBookReducer = createSlice({
@@ -63,6 +69,29 @@ const addressBookReducer = createSlice({
 		},
 		[addAddressBookForEntity.rejected.type]: (state, action: PayloadAction<string>) => {
 			state.loadingUpdateAddressBooksForEntity = false;
+			state.errorMessage = action.payload;
+		},
+		[getDealsStatus.fulfilled.type]: (state, action: PayloadAction<IDealsStatus>) => {
+			state.loadingDealStatus = false;
+			state.errorMessage = '';
+			state.dealsStatus = action.payload;
+		},
+		[getDealsStatus.pending.type]: (state) => {
+			state.loadingDealStatus = true;
+			state.errorMessage = '';
+		},
+		[getDealsStatus.rejected.type]: (state, action: PayloadAction<string>) => {
+			state.loadingDealStatus = false;
+			state.errorMessage = action.payload;
+		},
+		[handleDealsStatus.fulfilled.type]: (state, action: PayloadAction<IDealsStatus>) => {
+			state.errorMessage = '';
+			state.dealsStatus = action.payload;
+		},
+		[handleDealsStatus.pending.type]: (state) => {
+			state.errorMessage = '';
+		},
+		[handleDealsStatus.rejected.type]: (state, action: PayloadAction<string>) => {
 			state.errorMessage = action.payload;
 		},
 	},

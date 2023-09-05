@@ -46,3 +46,30 @@ export const addAddressBookForEntity = createAsyncThunk(
 		}
 	},
 );
+
+export const getDealsStatus = createAsyncThunk('addressBook/getDealsStatus', async (_, thunkAPI) => {
+	try {
+		const token = await getToken();
+		return await fetch(`${SENDPULSE_API}/deals/settingStatus`, {
+			headers: { Accept: 'application/json', 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+		}).then(async (res) => {
+			return await res.json();
+		});
+	} catch (e) {
+		return thunkAPI.rejectWithValue('Failure');
+	}
+});
+
+export const handleDealsStatus = createAsyncThunk('addressBook/handleDealsStatus', async (turnOn: boolean, thunkAPI) => {
+	try {
+		const token = await getToken();
+		return await fetch(`${SENDPULSE_API}/deals/${turnOn ? 'enable' : 'disable'}`, {
+			method: 'POST',
+			headers: { Accept: 'application/json', 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+		}).then(async (res) => {
+			return await res.json();
+		});
+	} catch (e) {
+		return thunkAPI.rejectWithValue('Failure');
+	}
+});
