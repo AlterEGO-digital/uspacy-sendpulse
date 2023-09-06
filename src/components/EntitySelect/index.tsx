@@ -2,6 +2,7 @@ import { Button, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useAddressBookData } from '../../hooks/useAddressBook';
 import DropDownMenu from '../DropDownMenu';
@@ -14,11 +15,12 @@ interface IProps {
 }
 const EntitySelect: React.FC<IProps> = ({ entityName, addressBookId, onChangeAddressBookId }) => {
 	const theme = useTheme();
+	const { t } = useTranslation();
 	const [anchorUnit, setAnchorUnit] = useState<null | HTMLElement>(null);
 	const { addressBooks, loadingAddressBooks, loadingAddressBooksForEntity } = useAddressBookData();
 	const [currentAddressBookId, setCurrentAddressId] = useState(addressBookId);
 	const address = useMemo(
-		() => [{ id: 0, name: 'Не обрано' }, ...addressBooks]?.find((it) => it?.id === currentAddressBookId),
+		() => [{ id: 0, name: t('notSelected') }, ...addressBooks]?.find((it) => it?.id === currentAddressBookId),
 		[addressBooks, currentAddressBookId],
 	);
 	const loading = useMemo(() => loadingAddressBooks || loadingAddressBooksForEntity, [loadingAddressBooks, loadingAddressBooksForEntity]);
@@ -34,19 +36,6 @@ const EntitySelect: React.FC<IProps> = ({ entityName, addressBookId, onChangeAdd
 
 	const handleDropDownClose = (event: React.MouseEvent<HTMLDivElement>, func: Dispatch<SetStateAction<null | HTMLElement>>) => {
 		func(null);
-	};
-
-	const getTitle = (name: string) => {
-		switch (name) {
-			case 'leads':
-				return 'Лід';
-			case 'contacts':
-				return 'Контакт';
-			case 'companies':
-				return 'Компанія';
-			default:
-				return '';
-		}
 	};
 
 	const handleUnitChange = (id: number) => {
@@ -79,7 +68,7 @@ const EntitySelect: React.FC<IProps> = ({ entityName, addressBookId, onChangeAdd
 					color: theme.palette.text.primary,
 				}}
 			>
-				{getTitle(entityName)}
+				{t(entityName)}
 			</Typography>
 			{loading ? (
 				<Loader size={25} />
@@ -101,7 +90,9 @@ const EntitySelect: React.FC<IProps> = ({ entityName, addressBookId, onChangeAdd
 					</Typography>
 					<DropDownMenu
 						id={currentAddressBookId}
-						options={Array.from(new Set([{ id: 0, name: 'Не обрано' }, ...addressBooks?.map((it) => ({ id: it.id, name: it.name }))]))}
+						options={Array.from(
+							new Set([{ id: 0, name: t('notSelected') }, ...addressBooks?.map((it) => ({ id: it.id, name: it.name }))]),
+						)}
 						anchorEl={anchorUnit}
 						handleClose={(e) => handleDropDownClose(e, setAnchorUnit)}
 						handleChange={handleUnitChange}
@@ -117,7 +108,7 @@ const EntitySelect: React.FC<IProps> = ({ entityName, addressBookId, onChangeAdd
 				}}
 				onClick={makeInactive}
 			>
-				Скасувати
+				{t('cancel')}
 			</Button>
 		</Box>
 	);
