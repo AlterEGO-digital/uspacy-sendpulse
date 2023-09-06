@@ -7,7 +7,6 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { useAuth, useAuthData } from '../../hooks/useAuth';
 import { useErrorNotification } from '../../hooks/useErrorNotification';
@@ -35,7 +34,6 @@ const StringInput = styled(TextField)<CardProps>(() => ({
 	marginTop: '20px',
 }));
 const Auth: React.FC = () => {
-	const { t } = useTranslation();
 	const theme = useTheme();
 	const { addToken } = useAuth();
 	const { loadingAddToken, authInfo } = useAuthData();
@@ -104,7 +102,7 @@ const Auth: React.FC = () => {
 					return !val.trim().length;
 				});
 			if (checkStringFieldValidation) {
-				errorNotification(t('fieldsNotFilled'));
+				errorNotification('Незаповнені необхідні поля');
 			}
 			return;
 		}
@@ -130,12 +128,14 @@ const Auth: React.FC = () => {
 			}}
 		>
 			<Card sx={{ zIndex: 1 }}>
-				<CardContent sx={{ p: (them) => `${them.spacing(12, 9, 7)} !important`, position: 'relative' }}>
+				<CardContent sx={{ p: (t) => `${t.spacing(12, 9, 7)} !important`, position: 'relative' }}>
 					<Box sx={{ mb: '10px' }}>
 						<Typography variant="h5" sx={{ fontWeight: 600, mb: 1.5 }}>
 							Sendpulse
 						</Typography>
-						<Typography variant="body2">{t('сopyDataPersonalAccountForLog')}</Typography>
+						<Typography variant="body2">
+							Скопіюйте, будь ласка, client id та client secret в особистому кабінеті Sendpulse та авторизуйтесь в системі
+						</Typography>
 					</Box>
 					<form noValidate autoComplete="off" onSubmit={(e) => e.preventDefault()}>
 						<StringInput
@@ -157,7 +157,7 @@ const Auth: React.FC = () => {
 							error={errorValidation.clientSecret}
 							helperText={errorValidation.clientSecret && 'Введіть client secret'}
 							name="clientSecret"
-							label={t('secret')}
+							label="Secret"
 							value={values.clientSecret}
 							onKeyDown={onKeyDown}
 							onFocus={() => onFocus('clientSecret')}
@@ -175,7 +175,7 @@ const Auth: React.FC = () => {
 							variant="contained"
 							sx={{ mt: '20px', background: theme.palette.primary.main }}
 						>
-							{t('login')}
+							Login
 						</LoadingButton>
 					</form>
 					{!loadingAddToken && !authInfo.has_token && isIncorrectData && (
@@ -186,8 +186,8 @@ const Auth: React.FC = () => {
 								color: theme.palette.error.main,
 							}}
 						>
-							{t('incorrectCredentials')} <br />
-							{t('pleaseCheckAndTryAgain')}
+							Ви ввели неправильні авторизаційні дані! <br />
+							Будь ласка, перевірте та повторіть спробу
 						</Typography>
 					)}
 				</CardContent>
