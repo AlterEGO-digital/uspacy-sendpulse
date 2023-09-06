@@ -4,7 +4,7 @@
   "enterClientID": "Enter client ID",
   "incorrectCredentials": "You have entered incorrect credentials!",
   "pleaseCheckAndTryAgain": "Please check and try again",
-  "сopyDataPersonalAccountForLog": "Please copy the client ID and client secret from your Sendpulse personal account and log in to the system.",
+  "copyDataPersonalAccountForLog": "Please copy the client ID and client secret from your Sendpulse personal account and log in to the system.",
   "createAgreement": "create an Agreement after creating a Contact in the Sendpulse Address Book",
   "cancel": "Cancel",
   "save": "Save",

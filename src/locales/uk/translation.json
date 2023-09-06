@@ -4,7 +4,7 @@
   "enterClientID": "Введіть client ID",
   "incorrectCredentials": "Ви ввели неправильні авторизаційні дані!",
   "pleaseCheckAndTryAgain": "Будь ласка, перевірте та повторіть спробу",
-  "сopyDataPersonalAccountForLog": "Скопіюйте, будь ласка, client id та client secret в особистому кабінеті Sendpulse та авторизуйтесь в системі",
+  "copyDataPersonalAccountForLog": "Скопіюйте, будь ласка, client id та client secret в особистому кабінеті Sendpulse та авторизуйтесь в системі",
   "createAgreement": "створювати Угоду після створення Контакту в Адресній книзі Sendpulse",
   "cancel": "Скасувати",
   "save": "Зберегти",
