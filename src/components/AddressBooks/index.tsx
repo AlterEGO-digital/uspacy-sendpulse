@@ -4,6 +4,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { isStage } from '../../const';
 import { useAddressBook, useAddressBookData } from '../../hooks/useAddressBook';
@@ -11,6 +12,7 @@ import { useAuth } from '../../hooks/useAuth';
 import EntitySelect from '../EntitySelect';
 
 const AddressBooks = () => {
+	const { t } = useTranslation();
 	const { addressBooksForEntity, addressBooks, dealsStatus } = useAddressBookData();
 	const { getAddressBooks, getAddressBookEntities, addAddressBookForEntity, clearAddressBooksInfo, getDealsStatus, handleDealsStatus } =
 		useAddressBook();
@@ -110,7 +112,7 @@ const AddressBooks = () => {
 									fontSize: '14px',
 								}}
 							>
-								створювати Угоду після створення Контакту в Адресній книзі Sendpulse
+								{t('createAgreement')}
 							</Typography>
 						}
 					/>
@@ -124,7 +126,7 @@ const AddressBooks = () => {
 							}}
 							onClick={saveChange}
 						>
-							Зберегти
+							{t('save')}
 						</Button>
 						<Button
 							sx={{
@@ -132,7 +134,7 @@ const AddressBooks = () => {
 							}}
 							onClick={cancelChange}
 						>
-							Скасувати
+							{t('cancel')}
 						</Button>
 					</>
 				)}
@@ -144,7 +146,7 @@ const AddressBooks = () => {
 					}}
 					onClick={logout}
 				>
-					Вийти
+					{t('goOut')}
 				</Button>
 			</Box>
 			{isStage && (
@@ -163,7 +165,7 @@ const AddressBooks = () => {
 								}}
 								onClick={saveChange}
 							>
-								Зберегти
+								{t('save')}
 							</Button>
 							<Button
 								sx={{
@@ -171,7 +173,7 @@ const AddressBooks = () => {
 								}}
 								onClick={cancelChange}
 							>
-								Скасувати
+								{t('cancel')}
 							</Button>
 						</>
 					)}
