@@ -135,7 +135,7 @@ const Auth: React.FC = () => {
 						<Typography variant="h5" sx={{ fontWeight: 600, mb: 1.5 }}>
 							Sendpulse
 						</Typography>
-						<Typography variant="body2">{t('сopyDataPersonalAccountForLog')}</Typography>
+						<Typography variant="body2">{t('copyDataPersonalAccountForLog')}</Typography>
 					</Box>
 					<form noValidate autoComplete="off" onSubmit={(e) => e.preventDefault()}>
 						<StringInput

@@ -4,7 +4,7 @@
   "enterClientID": "Wprowadź ID klienta",
   "incorrectCredentials": "Wprowadziłeś/łaś nieprawidłowe dane uwierzytelniające!",
   "pleaseCheckAndTryAgain": "Proszę sprawdź i spróbuj ponownie",
-  "сopyDataPersonalAccountForLog": "Proszę skopiować client ID i client secret z Twojego osobistego panelu w Sendpulse i zalogować się do systemu.",
+  "copyDataPersonalAccountForLog": "Proszę skopiować client ID i client secret z Twojego osobistego panelu w Sendpulse i zalogować się do systemu.",
   "createAgreement": "umowa po utworzeniu Kontaktu w Książce adresowej w Sendpulse",
   "cancel": "Anuluj",
   "save": "Zapisz",
