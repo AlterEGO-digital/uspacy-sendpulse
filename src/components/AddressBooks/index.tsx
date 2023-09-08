@@ -4,6 +4,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { isStage } from '../../const';
 import { useAddressBook, useAddressBookData } from '../../hooks/useAddressBook';
@@ -11,6 +12,7 @@ import { useAuth } from '../../hooks/useAuth';
 import EntitySelect from '../EntitySelect';
 
 const AddressBooks = () => {
+	const { t } = useTranslation();
 	const { addressBooksForEntity, addressBooks, dealsStatus } = useAddressBookData();
 	const { getAddressBooks, getAddressBookEntities, addAddressBookForEntity, clearAddressBooksInfo, getDealsStatus, handleDealsStatus } =
 		useAddressBook();
@@ -91,41 +93,26 @@ const AddressBooks = () => {
 					flexDirection: 'row',
 				}}
 			>
-				<FormControlLabel
-					sx={{
-						fontSize: '14px',
-						marginLeft: '5px',
-					}}
-					control={<Checkbox checked={isDealEnable} onChange={changeDealStatus} />}
-					label={
-						<Typography
-							component="span"
-							sx={{
-								color: (theme) => theme.palette.text.primary,
-								fontSize: '14px',
-							}}
-						>
-							створювати Угоду після створення Контакту в Адресній книзі Sendpulse
-						</Typography>
-					}
-				/>
-				<Button
-					sx={{
-						marginLeft: 'auto',
-						textTransform: 'initial',
-						marginRight: '15px',
-					}}
-					onClick={logout}
-				>
-					Вийти
-				</Button>
-			</Box>
-			<Box
-				sx={{
-					display: 'flex',
-					flexDirection: 'row',
-				}}
-			>
+				{isStage && (
+					<FormControlLabel
+						sx={{
+							fontSize: '14px',
+							marginLeft: '5px',
+						}}
+						control={<Checkbox checked={isDealEnable} onChange={changeDealStatus} />}
+						label={
+							<Typography
+								component="span"
+								sx={{
+									color: (theme) => theme.palette.text.primary,
+									fontSize: '14px',
+								}}
+							>
+								{t('createAgreement')}
+							</Typography>
+						}
+					/>
+				)}
 				{isDiff && (
 					<>
 						<Button
@@ -135,7 +122,7 @@ const AddressBooks = () => {
 							}}
 							onClick={saveChange}
 						>
-							Зберегти
+							{t('save')}
 						</Button>
 						<Button
 							sx={{
@@ -143,11 +130,23 @@ const AddressBooks = () => {
 							}}
 							onClick={cancelChange}
 						>
-							Скасувати
+							{t('cancel')}
 						</Button>
 					</>
 				)}
+				<Button
+					sx={{
+						marginLeft: 'auto',
+						textTransform: 'initial',
+						marginRight: '15px',
+					}}
+					onClick={logout}
+				>
+					{t('goOut')}
+				</Button>
 			</Box>
+				</Box>
+			)}
 		</Box>
 	);
 };
