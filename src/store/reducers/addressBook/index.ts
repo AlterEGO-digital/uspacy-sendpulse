@@ -35,7 +35,7 @@ const addressBookReducer = createSlice({
 		[getAddressBooks.fulfilled.type]: (state, action: PayloadAction<IAddressBook[]>) => {
 			state.loadingAddressBooks = false;
 			state.errorMessage = '';
-			state.addressBooks = action.payload;
+			state.addressBooks = !!action.payload.length ? action.payload : [];
 		},
 		[getAddressBooks.pending.type]: (state) => {
 			state.loadingAddressBooks = true;
