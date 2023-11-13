@@ -26,7 +26,7 @@ const DropDownMenu: React.FC<IProps> = ({ id, anchorEl, open, handleClose, handl
 				},
 			}}
 		>
-			{options.map((item) => (
+			{options?.map((item) => (
 				<MenuItem
 					onClick={(e) => onClick(e, item)}
 					key={item.id}
