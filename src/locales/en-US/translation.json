@@ -14,5 +14,25 @@
   "companies": "Company",
   "notSelected": "Not Selected",
   "login": "Login",
-  "secret": "Secret"
+  "secret": "Secret",
+  "gotIt": "OK",
+  "exportEntities": "import from Uspacy to Sendpulse",
+  "exportEntitiesAlertDialog": {
+    "description": "Import cannot be started until at least one mapping is selected.",
+    "title": "Error"
+  },
+  "errors": {
+    "changeDealsSetting": {
+      "forbidden": "You do not have permission to perform this action. Please contact the administrator.",
+      "failure": "Request processing error. Please contact support."
+    },
+    "changeExportSetting": {
+      "forbidden": "You do not have permission to perform this action. Please contact the administrator.",
+      "failure": "Request processing error. Please contact support."
+    },
+    "addAddressBookForEntity": {
+      "forbidden": "You do not have permission to perform this action. Please contact the administrator.",
+      "failure": "Request processing error. Please contact support."
+    }
+  }
 }
