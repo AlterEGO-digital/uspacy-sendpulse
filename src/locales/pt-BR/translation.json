@@ -14,5 +14,25 @@
   "companies": "Empresa",
   "notSelected": "Não selecionado",
   "login": "Login",
-  "secret": "Chave"
+  "secret": "Chave",
+  "gotIt": "OK",
+  "exportEntities": "importação do Uspacy para o Sendpulse",
+  "exportEntitiesAlertDialog": {
+    "description": "A importação não pode ser iniciada até que pelo menos um mapeamento seja selecionado.",
+    "title": "Erro"
+  },
+  "errors": {
+    "changeDealsSetting": {
+      "forbidden": "Você não tem permissão para realizar esta ação. Entre em contato com o administrador.",
+      "failure": "Erro no processamento da solicitação. Entre em contato com o suporte."
+    },
+    "changeExportSetting": {
+      "forbidden": "Você não tem permissão para realizar esta ação. Entre em contato com o administrador.",
+      "failure": "Erro no processamento da solicitação. Entre em contato com o suporte."
+    },
+    "addAddressBookForEntity": {
+      "forbidden": "Você não tem permissão para realizar esta ação. Entre em contato com o administrador.",
+      "failure": "Erro no processamento da solicitação. Entre em contato com o suporte."
+    }
+  }
 }

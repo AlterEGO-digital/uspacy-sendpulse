@@ -3,7 +3,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IAddressBook } from '../../../models/IAddressBook';
 import { IAddressbookForEntity } from '../../../models/IAddressbookForEntity';
 import { IDealsStatus } from '../../../models/IDealsStatus';
-import { addAddressBookForEntity, getAddressBookEntities, getAddressBooks, getDealsStatus, handleDealsStatus } from './action';
+import { IExportStatus } from '../../../models/IExportStatus';
+import {
+	addAddressBookForEntity,
+	getAddressBookEntities,
+	getAddressBooks,
+	getDealsStatus,
+	getExportStatus,
+	handleDealsStatus,
+	handleExportStatus,
+} from './action';
 import { IState } from './types';
 
 const initialState = {
@@ -15,11 +24,16 @@ const initialState = {
 		status: false,
 		message: '',
 	},
+	exportStatus: {
+		status: false,
+		message: '',
+	},
 	errorMessage: '',
 	loadingAddressBooks: true,
 	loadingAddressBooksForEntity: true,
 	loadingUpdateAddressBooksForEntity: false,
 	loadingDealStatus: true,
+	loadingExportStatus: true,
 } as IState;
 
 const addressBookReducer = createSlice({
@@ -57,6 +71,7 @@ const addressBookReducer = createSlice({
 		[getAddressBookEntities.rejected.type]: (state, action: PayloadAction<string>) => {
 			state.loadingAddressBooksForEntity = false;
 			state.errorMessage = action.payload;
+			state.addressBooksForEntity = { entities: { leads: 0 } };
 		},
 		[addAddressBookForEntity.fulfilled.type]: (state, action: PayloadAction<IAddressbookForEntity>) => {
 			state.loadingUpdateAddressBooksForEntity = false;
@@ -92,6 +107,29 @@ const addressBookReducer = createSlice({
 			state.errorMessage = '';
 		},
 		[handleDealsStatus.rejected.type]: (state, action: PayloadAction<string>) => {
+			state.errorMessage = action.payload;
+		},
+		[getExportStatus.fulfilled.type]: (state, action: PayloadAction<IDealsStatus>) => {
+			state.loadingExportStatus = false;
+			state.errorMessage = '';
+			state.exportStatus = action.payload;
+		},
+		[getExportStatus.pending.type]: (state) => {
+			state.loadingExportStatus = true;
+			state.errorMessage = '';
+		},
+		[getExportStatus.rejected.type]: (state, action: PayloadAction<string>) => {
+			state.loadingExportStatus = false;
+			state.errorMessage = action.payload;
+		},
+		[handleExportStatus.fulfilled.type]: (state, action: PayloadAction<IExportStatus>) => {
+			state.errorMessage = '';
+			state.exportStatus = action.payload;
+		},
+		[handleExportStatus.pending.type]: (state) => {
+			state.errorMessage = '';
+		},
+		[handleExportStatus.rejected.type]: (state, action: PayloadAction<string>) => {
 			state.errorMessage = action.payload;
 		},
 	},
