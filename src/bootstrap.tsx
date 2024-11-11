@@ -1,3 +1,4 @@
+import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -10,4 +11,8 @@ import Settings from './components/Settings';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
-root.render(<Settings />);
+root.render(
+	<SnackbarProvider autoHideDuration={1000}>
+		<Settings />
+	</SnackbarProvider>,
+);
