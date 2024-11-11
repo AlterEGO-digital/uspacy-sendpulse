@@ -1,10 +1,14 @@
-import { RootState } from '../store';
+import type { IAddressbookForEntity } from '../models/IAddressbookForEntity';
+import type { RootState } from '../store';
 import {
 	addAddressBookForEntity as addAddressBookForEntityAction,
 	getAddressBookEntities as getAddressBookEntitiesAction,
 	getAddressBooks as getAddressBooksAction,
 	getDealsStatus as getDealsStatusAction,
+	getExportStatus as getExportStatusAction,
 	handleDealsStatus as handleDealsStatusAction,
+	handleExportStatus as handleExportStatusAction,
+	syncAddressBookEntities as syncAddressBookEntitiesAction,
 } from '../store/reducers/addressBook/action';
 import { clearAddressBooksInfo as clearAddressBooksInfoReducer } from '../store/reducers/addressBook/index';
 import { useAppDispatch, useAppSelector } from './redux';
@@ -14,10 +18,13 @@ type AddressBookType = RootState['addressBook'];
 export interface IUseAddressBook {
 	getAddressBooks(): void;
 	getAddressBookEntities(): void;
-	addAddressBookForEntity(data: { leads?: number; contacts?: number; companies?: number }): void;
+	addAddressBookForEntity(data: { leads?: number; contacts?: number; companies?: number }): Promise<IAddressbookForEntity>;
 	clearAddressBooksInfo(): void;
+	syncAddressBookEntities(): void;
 	getDealsStatus(): void;
-	handleDealsStatus(status: boolean): void;
+	getExportStatus(): void;
+	handleDealsStatus(status: boolean): Promise<string>;
+	handleExportStatus(status: boolean): Promise<string>;
 }
 
 export const useAddressBook = (): IUseAddressBook => {
@@ -32,7 +39,7 @@ export const useAddressBook = (): IUseAddressBook => {
 	};
 
 	const addAddressBookForEntity = (data: { leads?: number; contacts?: number; companies?: number }) => {
-		dispatch(addAddressBookForEntityAction(data));
+		return dispatch(addAddressBookForEntityAction(data)).unwrap();
 	};
 
 	const clearAddressBooksInfo = () => {
@@ -42,8 +49,17 @@ export const useAddressBook = (): IUseAddressBook => {
 	const getDealsStatus = () => {
 		dispatch(getDealsStatusAction());
 	};
+	const getExportStatus = () => {
+		dispatch(getExportStatusAction());
+	};
 	const handleDealsStatus = (status: boolean) => {
-		dispatch(handleDealsStatusAction(status));
+		return dispatch(handleDealsStatusAction(status)).unwrap();
+	};
+	const handleExportStatus = (status: boolean) => {
+		return dispatch(handleExportStatusAction(status)).unwrap();
+	};
+	const syncAddressBookEntities = () => {
+		return dispatch(syncAddressBookEntitiesAction());
 	};
 
 	return {
@@ -52,7 +68,10 @@ export const useAddressBook = (): IUseAddressBook => {
 		getAddressBookEntities,
 		addAddressBookForEntity,
 		getDealsStatus,
+		getExportStatus,
 		handleDealsStatus,
+		handleExportStatus,
+		syncAddressBookEntities,
 	};
 };
 
